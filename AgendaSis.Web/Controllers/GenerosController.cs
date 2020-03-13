@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AgendaSis.Application.Models.Salas;
-using AgendaSis.Application.Services.Salas;
+using AgendaSis.Application.Models.Generos;
+using AgendaSis.Application.Services.Generos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,39 +11,39 @@ namespace AgendaSis.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SalasController : ControllerBase
+    public class GenerosController : ControllerBase
     {
-        private readonly ISalaService svc;
+        private readonly IGeneroService svc;
 
-        public SalasController(ISalaService service)
+        public GenerosController(IGeneroService service)
         {
             svc = service;
         }
 
-        // GET: api/Salas
+        // GET: api/Generos
         [HttpGet]
-        public async Task<IEnumerable<SalaResponseDto>> Get()
+        public async Task<IEnumerable<GeneroResponseDto>> Get()
         {
             return await svc.GetAllAsync();
         }
 
-        // GET: api/Salas/5
-        [HttpGet("{id}", Name = "GetSalaById")]
-        public async Task<SalaResponseDto> Get(int id)
+        // GET: api/Generos/5
+        [HttpGet("{id}", Name = "GetGeneroById")]
+        public async Task<GeneroResponseDto> Get(int id)
         {
             return await svc.GetById(id);
         }
 
-        // POST: api/Salas
+        // POST: api/Generos
         [HttpPost]
-        public async Task<SalaResponseDto> Post([FromBody] SalaRequestDto model)
+        public async Task<GeneroResponseDto> Post([FromBody] GeneroRequestDto model)
         {
             var response = await svc.CreateAsync(model);
 
             return response;
         }
 
-        // PUT: api/Salas/5
+        // PUT: api/Generos/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
