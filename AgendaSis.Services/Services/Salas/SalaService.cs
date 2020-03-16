@@ -1,11 +1,9 @@
 ﻿using AgendaSis.Application.Models.Salas;
 using AgendaSis.Domain.Entidades;
 using AgendaSis.Domain.Interfaces;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AgendaSis.Application.Services.Salas
@@ -22,6 +20,21 @@ namespace AgendaSis.Application.Services.Salas
         public async Task<SalaResponseDto> CreateAsync(SalaRequestDto model)
         {
             var sala = new Sala(model.Nome, model.Capacidade, model.Andar);
+
+            var validationResult = await sala.Validate();
+
+            if (!validationResult.IsValid)
+            {
+                var msg = "Ocorreu os seguintes erros:\n";
+
+                foreach (var erro in validationResult.Errors)
+                {
+                    msg = $"{msg}- {erro.ErrorMessage}\n";
+                }
+
+                throw new Exception(msg);
+            }
+
             await _salaRepository.CreateAsync(sala);
             var modelResponse = new SalaResponseDto
             {
@@ -75,6 +88,8 @@ namespace AgendaSis.Application.Services.Salas
             }
 
             sala.ChangeValues(model.Nome, model.Capacidade, model.Andar);
+            
+            await sala.Validate();
 
             await _salaRepository.UpdateAsync(sala);
         }

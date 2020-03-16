@@ -2,7 +2,7 @@
 
 namespace AgendaSis.Domain.Interfaces
 {
-    public interface IPessoaJuridicaRepository : IGenericRepository<PessoaJuridica>
+    public interface IPessoaFisicaRepository : IGenericRepository<PessoaFisica>
     {
     }
 }

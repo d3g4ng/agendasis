@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AgendaSis.Application.Models.Generos;
+﻿using AgendaSis.Application.Models.Generos;
 using AgendaSis.Application.Services.Generos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AgendaSis.Web.Controllers
 {

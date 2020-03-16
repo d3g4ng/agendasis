@@ -1,4 +1,7 @@
-﻿namespace AgendaSis.Domain.Entidades
+﻿using AgendaSis.Domain.Validacao;
+using System.Threading.Tasks;
+
+namespace AgendaSis.Domain.Entidades
 {
     public class Sala : BaseEntity
     {
@@ -16,6 +19,12 @@
             Nome = nome;
             Capacidade = capacidade;
             Andar = andar;
+        }
+
+        public async Task<FluentValidation.Results.ValidationResult> Validate()
+        {
+            var salaValidator = new SalaValidator();
+            return await salaValidator.ValidateAsync(this);
         }
 
         public string Nome { get; protected set; }
