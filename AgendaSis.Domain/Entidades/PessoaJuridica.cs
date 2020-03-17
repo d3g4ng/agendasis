@@ -11,7 +11,7 @@ namespace AgendaSis.Domain.Entidades
         public PessoaJuridica(string nome, string telefone, string endereco, string email, string cnpj, string razaoSocial, DateTime dataAbertura)
             : base(nome, telefone, endereco, email)
         {
-            Cnpj = cnpj;
+            Cnpj = cnpj.Replace(".", string.Empty).Replace("-", string.Empty).Replace("/", string.Empty);
             RazaoSocial = razaoSocial;
             DataAbertura = dataAbertura;
         }
@@ -19,7 +19,7 @@ namespace AgendaSis.Domain.Entidades
         public void UpdateValues(string nome, string telefone, string endereco, string email, string cnpj, string razaoSocial, DateTime dataAbertura)
         {
             UpdateValues(nome, telefone, endereco, email);
-            Cnpj = cnpj;
+            Cnpj = cnpj.Replace(".", string.Empty).Replace("-", string.Empty).Replace("/", string.Empty);
             RazaoSocial = razaoSocial;
             DataAbertura = dataAbertura;
         }

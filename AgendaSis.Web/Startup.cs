@@ -3,6 +3,7 @@ using AgendaSis.Application.Services.Pessoas;
 using AgendaSis.Application.Services.Salas;
 using AgendaSis.Domain.Interfaces;
 using AgendaSis.Infra.Contexto;
+using AgendaSis.Infra.Filtros;
 using AgendaSis.Infra.Repositorios;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,6 +42,8 @@ namespace AgendaSis.Web
             services.AddScoped<IPessoaFisicaService, PessoaFisicaService>();
             services.AddScoped<IPessoaJuridicaRepository, PessoaJuridicaRepository>();
             services.AddScoped<IPessoaJuridicaService, PessoaJuridicaService>();
+
+            services.AddMvc(options => options.Filters.Add(typeof(JsonExceptionFilter)));
 
             services.AddControllers();
         }

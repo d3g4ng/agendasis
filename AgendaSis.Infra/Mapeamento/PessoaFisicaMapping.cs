@@ -28,6 +28,9 @@ namespace AgendaSis.Infra.Mapeamento
                 .OnDelete(DeleteBehavior.Restrict);
             builder
                 .HasBaseType<Pessoa>();
+            builder
+                .HasIndex(h => h.Cpf)
+                .IsUnique();
         }
     }
 }

@@ -33,11 +33,11 @@ namespace AgendaSis.Application.Services.Pessoas
 
             if (!validationResult.IsValid)
             {
-                var msg = "Ocorreu os seguintes erros:\n";
+                var msg = "Ocorreu os seguintes erros:\r\n";
 
                 foreach (var erro in validationResult.Errors)
                 {
-                    msg = $"{msg}- {erro.ErrorMessage}\n";
+                    msg = $"{msg}- {erro.ErrorMessage}\r\n";
                 }
 
                 throw new Exception(msg);
@@ -120,11 +120,11 @@ namespace AgendaSis.Application.Services.Pessoas
 
             if (!validationResult.IsValid)
             {
-                var msg = "Ocorreu os seguintes erros:\n";
+                var msg = "Ocorreu os seguintes erros:\r\n";
 
                 foreach (var erro in validationResult.Errors)
                 {
-                    msg = $"{msg}- {erro.ErrorMessage}\n";
+                    msg = $"{msg}- {erro.ErrorMessage}\r\n";
                 }
 
                 throw new Exception(msg);

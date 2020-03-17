@@ -24,6 +24,9 @@ namespace AgendaSis.Infra.Mapeamento
                 .IsRequired();
             builder
                 .HasBaseType<Pessoa>();
+            builder
+                .HasIndex(h => h.Cnpj)
+                .IsUnique();
         }
     }
 }
