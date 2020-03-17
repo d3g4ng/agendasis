@@ -10,15 +10,16 @@ namespace AgendaSis.Infra.Filtros
     {
         public void OnException(ExceptionContext context)
         {
+            var erroValidacao = context.Exception.Message.StartsWith("Ocorreu os seguintes erros:");
             var result = new ObjectResult(new
             {
-                code = 500,
+                code = erroValidacao ? 400 : 500,
                 message = context.Exception.Message,
-                detais = context.Exception?.InnerException?.Message
+                details = context.Exception?.InnerException?.Message
             })
             {
 
-                StatusCode = 500
+                StatusCode = erroValidacao ? 400 : 500
             };
             context.Result = result;
         }
