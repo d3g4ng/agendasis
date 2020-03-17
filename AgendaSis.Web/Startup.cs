@@ -39,6 +39,8 @@ namespace AgendaSis.Web
 
             services.AddScoped<IPessoaFisicaRepository, PessoaFisicaRepository>();
             services.AddScoped<IPessoaFisicaService, PessoaFisicaService>();
+            services.AddScoped<IPessoaJuridicaRepository, PessoaJuridicaRepository>();
+            services.AddScoped<IPessoaJuridicaService, PessoaJuridicaService>();
 
             services.AddControllers();
         }

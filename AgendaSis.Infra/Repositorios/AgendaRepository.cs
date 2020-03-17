@@ -6,7 +6,7 @@ namespace AgendaSis.Infra.Repositorios
 {
     public class AgendaRepository : GenericRepository<Agenda>, IAgendaRepository
     {
-        public AgendaRepository(MeuContexto dbContext) 
+        public AgendaRepository(MeuContexto dbContext)
             : base(dbContext)
         {
         }

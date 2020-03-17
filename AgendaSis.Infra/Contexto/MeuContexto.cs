@@ -5,7 +5,7 @@ namespace AgendaSis.Infra.Contexto
 {
     public class MeuContexto : DbContext
     {
-        public MeuContexto([NotNullAttribute] DbContextOptions options) 
+        public MeuContexto([NotNullAttribute] DbContextOptions options)
             : base(options)
         {
         }

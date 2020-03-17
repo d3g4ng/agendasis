@@ -1,5 +1,4 @@
-﻿using AgendaSis.Application.Models.Generos;
-using AgendaSis.Application.Models.Pessoas;
+﻿using AgendaSis.Application.Models.Pessoas;
 using AgendaSis.Domain.Entidades;
 using AgendaSis.Domain.Interfaces;
 using System;
@@ -9,25 +8,25 @@ using System.Threading.Tasks;
 
 namespace AgendaSis.Application.Services.Pessoas
 {
-    public class PessoaFisicaService : IPessoaFisicaService
+    public class PessoaJuridicaService : IPessoaJuridicaService
     {
-        private readonly IPessoaFisicaRepository _repo;
+        private readonly IPessoaJuridicaRepository _repo;
 
-        public PessoaFisicaService(IPessoaFisicaRepository repo)
+        public PessoaJuridicaService(IPessoaJuridicaRepository repo)
         {
             _repo = repo;
         }
 
-        public async Task<PessoaFisicaResponseDto> CreateAsync(PessoaFisicaRequestDto model)
+        public async Task<PessoaJuridicaResponseDto> CreateAsync(PessoaJuridicaRequestDto model)
         {
-            var pessoa = new PessoaFisica(
+            var pessoa = new PessoaJuridica(
                 model.Nome,
                 model.Telefone,
                 model.Endereco,
                 model.Email,
-                model.Cpf,
-                model.GeneroId,
-                model.DataNascimento
+                model.Cnpj,
+                model.RazaoSocial,
+                model.DataAbertura
             );
 
             var validationResult = await pessoa.Validate();
@@ -46,16 +45,16 @@ namespace AgendaSis.Application.Services.Pessoas
 
             await _repo.CreateAsync(pessoa);
 
-            return new PessoaFisicaResponseDto
+            return new PessoaJuridicaResponseDto
             {
                 Id = pessoa.Id,
-                Cpf = pessoa.Cpf,
-                DataNascimento = pessoa.DataNascimento,
+                Cnpj = pessoa.Cnpj,
+                DataAbertura = pessoa.DataAbertura,
                 Email = pessoa.Email,
                 Endereco = pessoa.Endereco,
                 Nome = pessoa.Nome,
-                Telefone = pessoa.Telefone,
-                GeneroId = pessoa.GeneroId
+                RazaoSocial = pessoa.RazaoSocial,
+                Telefone = pessoa.Telefone
             };
         }
 
@@ -64,43 +63,41 @@ namespace AgendaSis.Application.Services.Pessoas
             await _repo.DeleteAsync(id);
         }
 
-        public async Task<List<PessoaFisicaResponseDto>> GetAllAsync()
+        public async Task<List<PessoaJuridicaResponseDto>> GetAllAsync()
         {
-            var pessoas = await _repo.GetAllWithGenerosAsync();
+            var pessoas = await _repo.GetAllAsync();
 
-            return pessoas.Select(s => new PessoaFisicaResponseDto
+            return pessoas.Select(s => new PessoaJuridicaResponseDto
             {
                 Id = s.Id,
                 Nome = s.Nome,
-                Cpf = s.Cpf,
-                DataNascimento = s.DataNascimento,
+                RazaoSocial = s.RazaoSocial,
+                Cnpj = s.Cnpj,
+                DataAbertura = s.DataAbertura,
                 Email = s.Email,
                 Endereco = s.Endereco,
-                Telefone = s.Telefone,
-                GeneroId = s.GeneroId,
-                Genero = new GeneroResponseDto { Id = s.Genero.Id, Nome = s.Genero.Nome }
+                Telefone = s.Telefone
             }).ToList();
         }
 
-        public async Task<PessoaFisicaResponseDto> GetByIdAsync(int id)
+        public async Task<PessoaJuridicaResponseDto> GetByIdAsync(int id)
         {
-            var pessoa = await _repo.GetByIdWithGenerosAsync(id);
+            var pessoa = await _repo.GetByIdAsync(id);
 
-            return new PessoaFisicaResponseDto
+            return new PessoaJuridicaResponseDto
             {
                 Id = pessoa.Id,
                 Nome = pessoa.Nome,
-                Cpf = pessoa.Cpf,
-                DataNascimento = pessoa.DataNascimento,
+                RazaoSocial = pessoa.RazaoSocial,
+                Cnpj = pessoa.Cnpj,
+                DataAbertura = pessoa.DataAbertura,
                 Email = pessoa.Email,
                 Endereco = pessoa.Endereco,
-                Telefone = pessoa.Telefone,
-                GeneroId = pessoa.GeneroId,
-                Genero = new GeneroResponseDto { Id = pessoa.Genero.Id, Nome = pessoa.Genero.Nome }
+                Telefone = pessoa.Telefone
             };
         }
 
-        public async Task UpdateAsync(int id, PessoaFisicaRequestDto model)
+        public async Task UpdateAsync(int id, PessoaJuridicaRequestDto model)
         {
             var pessoa = await _repo.GetByIdAsync(id);
 
@@ -114,9 +111,9 @@ namespace AgendaSis.Application.Services.Pessoas
                 model.Telefone,
                 model.Endereco,
                 model.Email,
-                model.Cpf,
-                model.GeneroId,
-                model.DataNascimento
+                model.Cnpj,
+                model.RazaoSocial,
+                model.DataAbertura
             );
 
             var validationResult = await pessoa.Validate();

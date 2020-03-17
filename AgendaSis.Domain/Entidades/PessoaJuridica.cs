@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AgendaSis.Domain.Validacao;
+using System;
+using System.Threading.Tasks;
 
 namespace AgendaSis.Domain.Entidades
 {
@@ -20,6 +22,12 @@ namespace AgendaSis.Domain.Entidades
             Cnpj = cnpj;
             RazaoSocial = razaoSocial;
             DataAbertura = dataAbertura;
+        }
+
+        public async Task<FluentValidation.Results.ValidationResult> Validate()
+        {
+            var validator = new PessoaJuridicaValidator();
+            return await validator.ValidateAsync(this);
         }
 
         public string Cnpj { get; protected set; }

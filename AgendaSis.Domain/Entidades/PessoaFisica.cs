@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AgendaSis.Domain.Validacao;
+using System;
+using System.Threading.Tasks;
 
 namespace AgendaSis.Domain.Entidades
 {
@@ -7,15 +9,15 @@ namespace AgendaSis.Domain.Entidades
         protected PessoaFisica() { }
 
         public PessoaFisica(
-            string nome, 
-            string telefone, 
-            string endereco, 
-            string email, 
-            string cpf, 
-            int generoId, 
+            string nome,
+            string telefone,
+            string endereco,
+            string email,
+            string cpf,
+            int generoId,
             DateTime dataNascimento
         )
-            : base (nome, telefone, endereco, email)
+            : base(nome, telefone, endereco, email)
         {
             Cpf = cpf;
             GeneroId = generoId;
@@ -36,6 +38,12 @@ namespace AgendaSis.Domain.Entidades
             Cpf = cpf;
             GeneroId = generoId;
             DataNascimento = dataNascimento;
+        }
+
+        public async Task<FluentValidation.Results.ValidationResult> Validate()
+        {
+            var validator = new PessoaFisicaValidator();
+            return await validator.ValidateAsync(this);
         }
 
         public string Cpf { get; protected set; }

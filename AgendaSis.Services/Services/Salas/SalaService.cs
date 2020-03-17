@@ -10,11 +10,11 @@ namespace AgendaSis.Application.Services.Salas
 {
     public class SalaService : ISalaService
     {
-        private readonly ISalaRepository _salaRepository;
+        private readonly ISalaRepository _repo;
 
-        public SalaService(ISalaRepository salaRepository)
+        public SalaService(ISalaRepository repo)
         {
-            _salaRepository = salaRepository;
+            _repo = repo;
         }
 
         public async Task<SalaResponseDto> CreateAsync(SalaRequestDto model)
@@ -35,7 +35,8 @@ namespace AgendaSis.Application.Services.Salas
                 throw new Exception(msg);
             }
 
-            await _salaRepository.CreateAsync(sala);
+            await _repo.CreateAsync(sala);
+
             var modelResponse = new SalaResponseDto
             {
                 Id = sala.Id,
@@ -49,12 +50,12 @@ namespace AgendaSis.Application.Services.Salas
 
         public async Task DeleteAsync(int id)
         {
-            await _salaRepository.DeleteAsync(id);
+            await _repo.DeleteAsync(id);
         }
 
         public async Task<IEnumerable<SalaResponseDto>> GetAllAsync()
         {
-            var lista = await _salaRepository.GetAllAsync();
+            var lista = await _repo.GetAllAsync();
 
             return lista.Select(sala => new SalaResponseDto
             {
@@ -67,7 +68,7 @@ namespace AgendaSis.Application.Services.Salas
 
         public async Task<SalaResponseDto> GetById(int id)
         {
-            var sala = await _salaRepository.GetByIdAsync(id);
+            var sala = await _repo.GetByIdAsync(id);
 
             return new SalaResponseDto
             {
@@ -80,7 +81,7 @@ namespace AgendaSis.Application.Services.Salas
 
         public async Task UpdateAsync(int id, SalaRequestDto model)
         {
-            var sala = await _salaRepository.GetByIdAsync(id);
+            var sala = await _repo.GetByIdAsync(id);
 
             if (sala == null)
             {
@@ -88,10 +89,22 @@ namespace AgendaSis.Application.Services.Salas
             }
 
             sala.ChangeValues(model.Nome, model.Capacidade, model.Andar);
-            
-            await sala.Validate();
 
-            await _salaRepository.UpdateAsync(sala);
+            var validationResult = await sala.Validate();
+
+            if (!validationResult.IsValid)
+            {
+                var msg = "Ocorreu os seguintes erros:\n";
+
+                foreach (var erro in validationResult.Errors)
+                {
+                    msg = $"{msg}- {erro.ErrorMessage}\n";
+                }
+
+                throw new Exception(msg);
+            }
+
+            await _repo.UpdateAsync(sala);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace AgendaSis.Application.Services.Generos
             };
 
             await Task.Run(() => Console.WriteLine("Inclui o genero"));
-            
+
             return genero;
         }
 

@@ -23,8 +23,8 @@ namespace AgendaSis.Domain.Entidades
 
         public async Task<FluentValidation.Results.ValidationResult> Validate()
         {
-            var salaValidator = new SalaValidator();
-            return await salaValidator.ValidateAsync(this);
+            var validator = new SalaValidator();
+            return await validator.ValidateAsync(this);
         }
 
         public string Nome { get; protected set; }
