@@ -2,6 +2,11 @@
 {
     public class BaseEntity
     {
-        public int Id { get; set; }
+        public int Id { get; protected set; }
+
+        public void SetaId(int id)
+        {
+            Id = id;
+        }
     }
 }
