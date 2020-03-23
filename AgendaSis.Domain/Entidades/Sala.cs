@@ -3,7 +3,8 @@ using System.Threading.Tasks;
 
 namespace AgendaSis.Domain.Entidades
 {
-    public class Sala : BaseEntity
+    public class 
+        Sala : BaseEntity
     {
         protected Sala() { }
 
