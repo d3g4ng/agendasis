@@ -12,7 +12,7 @@ namespace AgendaSis.Domain.Validacao
                 .MaximumLength(300).WithMessage("O nome da sala não pode ter mais que 300 caracteres").WithErrorCode("MaximumLength");
             RuleFor(r => r.Capacidade)
                 .NotNull().WithMessage("A capacidade da sala não pode ser nula")
-                .GreaterThan(1).WithMessage("A sala deve ter pelo menos um lugar").WithErrorCode("GreaterThan");
+                .GreaterThan(0).WithMessage("A sala deve ter pelo menos um lugar").WithErrorCode("GreaterThan");
             RuleFor(r => r.Andar)
                 .NotNull().WithMessage("O campo andar da sala não pode ser nulo");
         }
